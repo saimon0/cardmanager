@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cards manager</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
+    <script src="jquery.tabledit.js"></script>
+    <script src="script.js"></script>
+
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="col-md-12">
+        <h1 id="header">This is a simply CRUD card manager</h1>
+    </div>
+    <div class="col-md-12">
+        <br>
+        <p><b>CREATE</b> - creates new card in database</p><br>
+        <p><b>UPDATE</b> - this feature allows you to update the information of a given card</p><br>
+        <p><b>DELETE</b> - removes the card by entering it's id</p><br>
+        <p><b>REFRESH</b> - refresh table</p><br>
+    </div>
+    <div class="col-md-12">
+        <button type="button" id="create-button" class="btn btn-primary btn-bg">Create</button>
+        <button type="button" id="update-button" class="btn btn-primary btn-bg">Update</button>
+        <button type="button" id="delete-button" class="btn btn-primary btn-bg">Delete</button>
+        <button type="button" id="refresh-button" class="btn btn-primary btn-bg">Refresh</button>
+    </div>
+
+    <div id="form" class="col-md-12">
+        <br>
+        <form id="form-page" action="" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <p id="create-info">Insert cards parameters to create it</p>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="id-create" placeholder="card's ID">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="company-name-create" placeholder="Company Name">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="balance-create" placeholder="Balance">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="pin-create" placeholder="PIN">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="activation-date-create" placeholder="Activation Date">
+                    <br>
+                    <button type="button" class="btn-current-date btn btn-primary btn-bg" onclick="getCurrentDateTime()">Set current date and hour</button>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="expiration-date-create" placeholder="Expiration date">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <br>
+                <div class="row">
+                    <button type="button" id="run-btn-create" onclick="executeCreate()" class="run-button btn btn-primary btn-bg">Run</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="update-form" class="col-md-12">
+        <form id="form-page-update" action="" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <p id="update-info">Insert card's ID and parameters to be updated</p>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="id-update" placeholder="card's ID">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="company-name-update" placeholder="Company Name">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="balance-update" placeholder="Balance">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="pin-update" placeholder="PIN">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="activation-date-update" placeholder="Activation Date">
+                    <br>
+                    <button type="button" class="btn-current-date btn btn-primary btn-bg" onclick="getCurrentDateTimeUpdate()">Set current date and hour</button>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="expiration-date-update" placeholder="Expiration date">
+                </div>
+            </div>
+                <br>
+                <div class="col-md-12">
+                    <div class="row">
+                        <button type="button" id="run-btn-update" onclick="executeUpdate()" class="run-button btn btn-primary btn-bg">Run</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+
+    <div id="delete-form" class="col-md-12">
+        <form id="form-page-delete" action="" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <p id="delete-info">Insert card's ID to be removed</p>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" id="id-delete" class="form-control" name="id" placeholder="card's ID">
+                </div>
+                <div class="col-md-12">
+                    <br>
+                    <button type="button" id="run-btn-delete" onclick="executeDelete()" class="run-button btn btn-primary btn-bg">Run</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-12 form">
+        <br>
+        <table id="table-cards" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th class="th-sm">ID
+
+                </th>
+                <th class="th-sm">Company Name
+
+                </th>
+                <th class="th-sm">Balance
+
+                </th>
+                <th class="th-sm">PIN
+
+                </th>
+                <th class="th-sm">Activation Date
+
+                </th>
+                <th class="th-sm">Expiration Date
+
+                </th>
+                <th class="th-sm">Creation Date
+
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <ul class="pager">
+        </ul>
+    </div>
+</div>
+<div id="status"></div>
+</body>
+</html>

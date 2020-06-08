@@ -1,0 +1,32 @@
+#form form
+{
+    display: none;
+}
+
+#delete-form form
+{
+    display: none;
+}
+
+#update-form form
+{
+    display: none;
+}
+
+#update-info
+{
+    font-weight: bold;
+    color: forestgreen;
+}
+
+#create-info
+{
+    font-weight: bold;
+    color: forestgreen;
+}
+
+#delete-info
+{
+    font-weight: bold;
+    color: forestgreen;
+}
